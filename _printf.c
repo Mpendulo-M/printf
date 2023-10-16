@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
 #include "main.h"
@@ -10,11 +11,15 @@
 int _printf(const char *format, ...)
 {
     
-    int i, chr, num, num2, len, n, count;
+    int i, chr, num, num2, len, count;
     
     char *str;
-    
     va_list args;
+    i = 0;
+
+    while (format[i] != '\0')
+	    i++;
+    i = 0;
 
     va_start(args, format);
 
@@ -38,10 +43,10 @@ int _printf(const char *format, ...)
             case 's':
                 str = va_arg(args, char *);
                 len = strlen(str);
-                for (n = 0; n < len; n++)
-                {
-                    putchar(str[n]);
-                }
+		
+		str = malloc(sizeof(char) * (len + 1));
+                
+		printf("%s", str);
                 break;
 
             case 'd':
