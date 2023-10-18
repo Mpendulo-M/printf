@@ -11,15 +11,12 @@
 int _printf(const char *format, ...)
 {
     
-    int i, chr, num, num2, len, count;
+    int i, chr, num, num2, len, count, result;
     
     char *str;
     va_list args;
     i = 0;
-
-    while (format[i] != '\0')
-	    i++;
-    i = 0;
+    result = 0;
 
     va_start(args, format);
 
@@ -28,6 +25,7 @@ int _printf(const char *format, ...)
         if (format[i] != '%')
         {
             putchar(format[i]);
+	    result++;
         } 
 
         if (format[i] == '%')
@@ -52,19 +50,23 @@ int _printf(const char *format, ...)
             case 'd':
             case 'i':
                 num = va_arg(args, int);
+
                   if (num == 0)
                 {
                     putchar('0');
+		    result = 1;
                 }
                 if (num < 0)
                 {
                     num *= -1;
                     putchar(45);
+		    result++;
                 }
                     
                 if (num > 0 && num < 10)
                 {
                     putchar(num + '0');
+		    result = 1;
                 }
                 else if (num > 0)
                 {
@@ -73,6 +75,7 @@ int _printf(const char *format, ...)
                         count = num % 10;
                         num2 = num2 * 10 + count;
                         num /= 10;
+			result++;
                     }
                     while (num2 > 0)
                     {
@@ -82,6 +85,7 @@ int _printf(const char *format, ...)
                     }    
                     
                 }
+ 
                 break;
             case '%':
                 putchar(37);
@@ -96,5 +100,5 @@ int _printf(const char *format, ...)
 
 
 
-    return 8;
+    return result;
 }
