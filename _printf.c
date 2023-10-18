@@ -96,5 +96,5 @@ int _printf(const char *format, ...)
 
 
 
-    return i;
+    return 8;
 }
